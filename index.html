@@ -213,8 +213,8 @@
     const blockEscOn=()=>document.addEventListener('keydown',escBlock,true);
     const blockEscOff=()=>document.removeEventListener('keydown',escBlock,true);
     const escBlock=(e)=>{ if(e.key==='Escape') e.preventDefault(); };
-    const tickTime=()=>{ const left=(State.startAt?State.startAt+30*60*1000:State.dur)-Date.now(); const lbl=`Tiempo restante: ${fmt(left)}`; el.cTime.textContent=lbl; el.cTime2.textContent=lbl; if(left<=0&&!State.locked) finish('time'); };
-    const updChips=()=>{ const lbl=`Prueba: ${State.used}/${State.max}`; el.cTry.textContent=lbl; el.cTry2.textContent=lbl; };
+    const tickTime=()=>{ const left=(State.startAt?State.startAt+30*60*1000:State.dur)-Date.now(); const lbl=`:Temps restant ${fmt(left)}`; el.cTime.textContent=lbl; el.cTime2.textContent=lbl; if(left<=0&&!State.locked) finish('time'); };
+    const updChips=()=>{ const lbl=`Essai: ${State.used}/${State.max}`; el.cTry.textContent=lbl; el.cTry2.textContent=lbl; };
 
     // ===== ID Flow =====
     el.id.addEventListener('keydown',(e)=>{ if(['Backspace','Delete','ArrowLeft','ArrowRight','Tab'].includes(e.key))return; if(!/^\d$/.test(e.key)) e.preventDefault(); });
@@ -236,7 +236,7 @@
 
     // ===== Finish Modal =====
     function finish(reason){ if(State.locked) return; State.locked=true; State.reason=reason; save(); stopTimer(); stopLog(); setBgInteractive(false);
-      document.getElementById('endTitle').textContent = (reason==='time') ? 'Tu tiempo de demostración ha expirado.' : 'Tus predicciones de prueba se han terminado.'; openEnd(); }
+      document.getElementById('endTitle').textContent = (reason==='time') ? 'Ton temps d’essai est terminé.' : '👉 Tes prédictions d’essai sont terminées.'; openEnd(); }
     function openEnd(){ el.endO.style.display='flex'; el.endO.removeAttribute('aria-hidden'); trap(el.endD); blockEscOn(); requestAnimationFrame(()=>el.endBtn.focus()); }
 
     // ===== Console feed =====
@@ -263,7 +263,7 @@
     // ===== Boot =====
     (function boot(){
       load(); updChips();
-      if(State.locked){ show('select'); setBgInteractive(false); document.getElementById('endTitle').textContent=(State.reason==='time')?'Tu tiempo de prueba ha expirado.':'Tus predicciones de prueba han finalizado.'; openEnd(); return; }
+      if(State.locked){ show('select'); setBgInteractive(false); document.getElementById('endTitle').textContent=(State.reason==='time')?'Ton temps d’essai est terminé.':'👉 Tes prédictions d’essai sont terminées.'; openEnd(); return; }
       if(State.activated){ show('select'); if(State.startAt===null){ openIntro(); } else { setBgInteractive(true); startLog(); startTimer(); } return; }
       show('id');
     })();
